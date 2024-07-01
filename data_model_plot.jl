@@ -40,13 +40,8 @@ y_mean = normalization_params.value[3]
 y_std = normalization_params.value[4]
 
 # Display data and model
-println("Data file: ", ARGS[1])
-println(data)
-
-println("\nModel file: ", ARGS[2])
+println(data[1:min(10, size(data, 1)), :])
 println(model)
-
-println("\nNormalization file: ", ARGS[3])
 println(normalization_params)
 
 # Check if output file is valid
@@ -60,11 +55,11 @@ X = (data[:, 1] .- X_mean) ./ X_std
 y = (data[:, 2] .- y_mean) ./ y_std
 
 # Extract model parameters
-θ0 = model.θ0[1]
-θ1 = model.θ1[1]
+weight = model.weight[1]
+bias = model.bias[1]
 
 # Generate predictions
-predictions_normalized = θ0 .+ θ1 .* X
+predictions_normalized = weight .+ bias .* X
 predictions = predictions_normalized .* y_std .+ y_mean
 
 # Plot data and model using model's column names as labels
